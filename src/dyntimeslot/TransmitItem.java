@@ -20,7 +20,7 @@ public class TransmitItem {
     public boolean ArrivedAtTransmiter = false;
     public UUID uuid;
 
-    private static double GuardInterval = 400;
+    private static double GuardInterval = 400.0;
 
 
     public TransmitItem(String Message, int priority, int RIC, int SubRic, int Speed) {
@@ -37,9 +37,17 @@ public class TransmitItem {
     }
 
     public double getTXTimeForTransmission () {
-        double PreambleTime = 576/this.Speed;
-        double TransmissionDuration = (this.Message.length() / this.Speed) + PreambleTime + this.GuardInterval;
-        return (TransmissionDuration);
+        double PreambleTime = (double) (576.0/this.Speed * 1000.0);
+        double MessageDuration = (double) this.Message.length() / (double) this.Speed * 1000.0;
+        double TransmissionDuration = MessageDuration + PreambleTime + this.GuardInterval;
+        return (Math.ceil(TransmissionDuration));
+    }
+
+    public void HelperPrint() {
+        System.out.print ("Message: ");
+        System.out.print (this.Message);
+        System.out.print (" Prio: ");
+        System.out.println (this.priority);
     }
 }
 

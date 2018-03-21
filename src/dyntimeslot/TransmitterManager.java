@@ -46,7 +46,7 @@ public class TransmitterManager {
             Transmitter NextTransmitterToSend = findNextTransmitterWithItemWaiting(Priority, Time);
             if (NextTransmitterToSend != null) {
                 NextTransmitterToSend.QueueBundleToSend(Time);
-                for (Transmitter T: TransmitterList) {
+                for (Transmitter T: this.TransmitterList) {
                     if (TransmitterOverlapMap.AreTransmittersOverlapping(NextTransmitterToSend.getTransmitterName(), T.getTransmitterName())) {
                         T.BlockTransmitterUntil(NextTransmitterToSend.TransmittingUntil());
                     }
@@ -55,6 +55,13 @@ public class TransmitterManager {
         }
     }
 
+
+    public void HelperProcessTransmitters(double Time) {
+        for (Transmitter T: TransmitterList) {
+            T.HelperProcessTransmitter(Time);
+        }
+
+    }
     private Transmitter findNextTransmitterWithItemWaiting (int Priority, double Time) {
         double MinAirTime = -1;
         boolean foundOne = false;

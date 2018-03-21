@@ -47,4 +47,7 @@ public class TransmitItemBundle {
         this.EndTime = this.StartTime + this.Duration;
     }
 
+    public TransmitItem poll() {
+        return this.TransmitItemQueue.poll();
+    }
 }

@@ -15,6 +15,7 @@ public class Transmitter {
     private String TransmitterName;
     private double AirTime = 0;
     private double MinTimeforNextTransmit = 0;
+    private boolean isTransmitting = false;
 
 
     public Transmitter(String TransmitterName) {
@@ -89,5 +90,37 @@ public class Transmitter {
 
     public double TransmittingUntil (){
         return this.MinTimeforNextTransmit;
+    }
+
+    public void HelperProcessTransmitter (double Time) {
+        if (!TransmitItemBundleQueue.isEmpty()) {
+            if ((Time >= this.TransmitItemBundleQueue.peek().getStartTime()) && (!this.isTransmitting)) {
+                this.isTransmitting = true;
+                this.AirTime = this.AirTime + this.TransmitItemBundleQueue.peek().getDuration();
+                System.out.print("START Transmitter ");
+                System.out.print(this.TransmitterName);
+                System.out.print(" at ");
+                System.out.print(Time);
+                System.out.println("");
+            }
+            if (Time >= this.TransmitItemBundleQueue.peek().getEndTime()) {
+                this.isTransmitting = false;
+
+                // Remove TransmitItemBundle from Queue
+                TransmitItemBundle TIB = this.TransmitItemBundleQueue.poll();
+                System.out.println("Transmitted Messages");
+                while (!TIB.isEmpty()) {
+                    TIB.poll().HelperPrint();
+                }
+                // Remove TransmitItemBundle from Queue
+                TransmitItemBundleQueue.poll();
+                System.out.print("STOP Transmitter ");
+                System.out.print(this.TransmitterName);
+                System.out.print(" at ");
+                System.out.print(Time);
+                System.out.print("  AirTime: ");
+                System.out.println(this.AirTime);
+            }
+        }
     }
 }
