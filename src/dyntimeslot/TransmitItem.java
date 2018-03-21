@@ -20,8 +20,8 @@ public class TransmitItem {
     public boolean ArrivedAtTransmiter = false;
     public UUID uuid;
 
-    private double GuardInterval = 400;
-    private double PreambleTime = 300000;
+    private static double GuardInterval = 400;
+
 
     public TransmitItem(String Message, int priority, int RIC, int SubRic, int Speed) {
         this.Message = Message;
@@ -37,7 +37,8 @@ public class TransmitItem {
     }
 
     public double getTXTimeForTransmission () {
-        double TransmissionDuration = (this.Message.length() * 2000) + this.PreambleTime + this.GuardInterval;
+        double PreambleTime = 576/this.Speed;
+        double TransmissionDuration = (this.Message.length() / this.Speed) + PreambleTime + this.GuardInterval;
         return (TransmissionDuration);
     }
 }

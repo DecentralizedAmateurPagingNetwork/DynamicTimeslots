@@ -4,18 +4,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        // Create Overlap Map
-	    TransmitterOverlapMap TransmitterOverlapMap = new TransmitterOverlapMap();
-        TransmitterOverlapMap.AddOverlappingTransmitters("db0abc", "db0def");
-        TransmitterOverlapMap.AddOverlappingTransmitters("db0abc", "db0ghi");
-
-/*      //Test geht
-        if (TransmitterOverlapMap.AreTransmittersOverlapping("db0def", "db0ghi")) {
-            System.out.println("Überlappend");
-        } else {
-            System.out.println("Nicht überlappend");
-        }
-*/
 
         // Add some transmitters
         TransmitterManager TransmitterManager = new TransmitterManager();
@@ -35,7 +23,10 @@ public class Main {
         TransmitterManager.addTransmitItemToTransmitter("db0ghi", "MessagePrio3", 3 ,1,1);
         TransmitterManager.addTransmitItemToTransmitter("db0ghi", "MessagePrio3", 3 ,1,1);
 
-
+        for (double Time = 0; Time < 10000; Time++) {
+            TransmitterManager.Scheduler(Time);
+        }
+        System.out.println("Done");
 /*
         System.out.println("Hello World!");
 
